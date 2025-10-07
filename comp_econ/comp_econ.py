@@ -11,7 +11,8 @@ import numpy as np
 
 def gjacobi(A, b, x0, tol=1e-6, max_iter=1000):
     """If the Gauss-Jacobi method converges for the passed arguments,
-    then the solution vector x and the number of iterations are returned. Otherwise, x0 is returned."""
+    then the solution vector x and the number of iterations are returned.
+    Otherwise, x is returned at the max_iter number of iterations."""
 
     n = len(b)
     x = np.copy(x0)
@@ -36,7 +37,8 @@ def gjacobi(A, b, x0, tol=1e-6, max_iter=1000):
 
 def gseidel(A, b, x0, tol=1e-6, max_iter=1000):
     """If the Gauss-Seidel method converges for the passed arguments,
-    then the solution vector x and the number of iterations are returned. Otherwise, x0 is returned."""
+    then the solution vector x and the number of iterations are returned.
+    Otherwise, x is returned at the max_iter number of iterations."""
 
     n = len(b)
     x = np.copy(x0)
