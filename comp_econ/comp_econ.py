@@ -10,6 +10,9 @@ import numpy as np
 # from CompEcon Toolbox for MATLAB.
 
 def gjacobi(A, b, x0, tol=1e-6, max_iter=1000):
+    """If the Gauss-Jacobi method converges for the passed arguments,
+    then the solution vector x and the number of iterations are returned. Otherwise, x0 is returned."""
+
     n = len(b)
     x = np.copy(x0)
     x_new = np.zeros_like(x)
@@ -23,15 +26,18 @@ def gjacobi(A, b, x0, tol=1e-6, max_iter=1000):
             x_new[i] = (b[i] - sum_val) / A[i, i]
         
         if np.linalg.norm(x_new - x, ord=np.inf) < tol:
-            print(f"Jacobi method converged in {k+1} iterations.")
-            return x_new
+            print(f"Gauss-Jacobi method converged in {k+1} iterations.")
+            return x_new, k+1
         
         x = np.copy(x_new)
         
-    print(f"Jacobi method did not converge within {max_iter} iterations.")
+    print(f"Gauss-Jacobi method did not converge within {max_iter} iterations.")
     return x
 
 def gseidel(A, b, x0, tol=1e-6, max_iter=1000):
+    """If the Gauss-Seidel method converges for the passed arguments,
+    then the solution vector x and the number of iterations are returned. Otherwise, x0 is returned."""
+
     n = len(b)
     x = np.copy(x0)
     
@@ -46,7 +52,7 @@ def gseidel(A, b, x0, tol=1e-6, max_iter=1000):
         
         if np.linalg.norm(x - x_old, ord=np.inf) < tol:
             print(f"Gauss-Seidel method converged in {k+1} iterations.")
-            return x
+            return x, k+1
             
     print(f"Gauss-Seidel method did not converge within {max_iter} iterations.")
     return x
