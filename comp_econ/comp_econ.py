@@ -58,3 +58,48 @@ def gseidel(A, b, x0, tol=1e-6, max_iter=1000):
             
     print(f"Gauss-Seidel method did not converge within {max_iter} iterations.")
     return x
+
+def bisect(f, a, b, tol=1e-6, max_iter=100, args=()):
+    """
+    Bisection root-finding algorithm with iteration counter.
+
+    Parameters:
+    -----------
+    f : callable
+        Function of a single variable, optionally with extra args.
+    a, b : float
+        Interval [a, b] where f changes sign.
+    tol : float
+        Convergence tolerance.
+    max_iter : int
+        Maximum number of iterations.
+    args : tuple
+        Extra arguments to pass to f.
+
+    Returns:
+    --------
+    root : float
+        Approximate root of f(x) in [a, b].
+    iterations : int
+        Number of iterations performed.
+    """
+    fa = f(a, *args)
+    fb = f(b, *args)
+    if fa * fb > 0:
+        raise ValueError("Function does not change sign on [a, b].")
+
+    for i in range(1, max_iter + 1):
+        c = (a + b) / 2
+        fc = f(c, *args)
+
+        if abs(fc) < tol or (b - a)/2 < tol:
+            return c, i  # Return root and iteration count
+
+        if fa * fc < 0:
+            b = c
+            fb = fc
+        else:
+            a = c
+            fa = fc
+
+    raise RuntimeError("Bisection method did not converge within max_iter.")
